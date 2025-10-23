@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Question Generator</title>
+    <style>
+        body { font-family: Segoe UI, sans-serif; background: #f0f0f0; padding: 20px; }
+        textarea, select, button { font-size: 16px; margin-top: 10px; width: 100%; }
+        .question { margin: 10px 0; padding: 10px; border-left: 5px solid; background: #fff; }
+        .Easy { border-color: green; }
+        .Moderate { border-color: orange; }
+        .Hard { border-color: red; }
+        .Warning { border-color: gray; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h2>🧠 Smart Question Generator</h2>
+    <form method="POST">
+        <label>Enter Paragraph:</label><br>
+        <textarea name="paragraph" rows="8">{{ paragraph }}</textarea><br>
+        <label>Select Difficulty:</label><br>
+        <select name="difficulty">
+            <option value="Any" {% if selected_level == "Any" %}selected{% endif %}>Any</option>
+            <option value="Easy" {% if selected_level == "Easy" %}selected{% endif %}>Easy</option>
+            <option value="Moderate" {% if selected_level == "Moderate" %}selected{% endif %}>Moderate</option>
+            <option value="Hard" {% if selected_level == "Hard" %}selected{% endif %}>Hard</option>
+        </select><br>
+        <button type="submit">Generate Questions</button>
+    </form>
+
+    {% if questions %}
+        <h3>Generated Questions:</h3>
+        {% for q, level in questions %}
+            <div class="question {{ level }}">{{ q }} <strong>[{{ level }}]</strong></div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
